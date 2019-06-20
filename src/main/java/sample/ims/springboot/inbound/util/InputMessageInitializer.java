@@ -2,29 +2,33 @@ package sample.ims.springboot.inbound.util;
 
 import com.ibm.connector2.ims.ico.IMSInteractionSpec;
 import javax.resource.ResourceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sample.ims.springboot.inbound.records.InputMessage;
 
 @Component
 public class InputMessageInitializer {
 
+  private final ImsInteractionSpecificationSetter imsInteractionSpecificationSetter;
+  private final InputMessagePropertiesSetter inputMessagePropertiesSetter;
+
+  @Autowired
+  public InputMessageInitializer(
+      ImsInteractionSpecificationSetter imsInteractionSpecificationSetter,
+      InputMessagePropertiesSetter inputMessagePropertiesSetter) {
+    this.imsInteractionSpecificationSetter = imsInteractionSpecificationSetter;
+    this.inputMessagePropertiesSetter = inputMessagePropertiesSetter;
+  }
+
+
   public InputMessage initInputMessage(String lastName, IMSInteractionSpec interactionSpec) {
     try {
-      interactionSpec.setInteractionVerb(IMSInteractionSpec.SYNC_SEND_RECEIVE );
-      interactionSpec.setCommitMode(IMSInteractionSpec.SEND_THEN_COMMIT); //could also be set to 1, clientid is generated
-      interactionSpec.setSyncLevel(IMSInteractionSpec.SYNC_LEVEL_NONE);
-      interactionSpec.setExecutionTimeout(600); //how long to wait for an answer from IMS
+      imsInteractionSpecificationSetter.setProperties(interactionSpec);
     } catch (ResourceException e) {
       e.printStackTrace();
     }
     InputMessage inputMessage = new InputMessage();
-    inputMessage.setIn__ll((short)inputMessage.getSize());
-    inputMessage.setIn__zz((short)0);
-    String transactionCode = "IVTNV";
-    String displayCommand = "DIS";
-    inputMessage.setIn__trancode(transactionCode);
-    inputMessage.setIn__command(displayCommand);
-    inputMessage.setIn__last__name(lastName.trim());
+    inputMessagePropertiesSetter.setMessageProperties(inputMessage, lastName);
     return inputMessage;
   }
 }
