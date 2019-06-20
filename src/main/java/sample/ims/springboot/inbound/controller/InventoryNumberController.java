@@ -12,9 +12,9 @@ import sample.ims.springboot.inbound.service.InventoryNumberService;
 @RequestMapping("/inventory-number")
 public class InventoryNumberController {
 
-  @Autowired
   private final InventoryNumberService inventoryNumberService;
 
+  @Autowired
   public InventoryNumberController(InventoryNumberService inventoryNumberService) {
     this.inventoryNumberService = inventoryNumberService;
   }
