@@ -12,4 +12,5 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.9.RELEASE'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
 }

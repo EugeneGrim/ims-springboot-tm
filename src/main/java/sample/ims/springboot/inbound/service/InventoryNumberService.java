@@ -6,7 +6,7 @@ import javax.resource.ResourceException;
 import javax.resource.cci.Connection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sample.ims.springboot.inbound.IMSManagedConnectionFactoryProperties;
+import sample.ims.springboot.inbound.util.IMSManagedConnectionFactoryProperties;
 import sample.ims.springboot.inbound.exception.NotFoundException;
 import sample.ims.springboot.inbound.records.InputMessage;
 import sample.ims.springboot.inbound.records.OutputMessage;
